@@ -1,16 +1,25 @@
-name: default
+name: Deployment Workflow
+
+# Trigger this workflow on pushes to the specified branch
 on:
   push:
     branches:
-    - 'testing'
-    jobs:
-  my_first_job:
-    name: My first job
+      - testing
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 22.7.2
-        cache: 'npm'
-    - run: npm ci
-    - run: npm test
+      - name: Checkout code
+        uses: actions/checkout@v4
+        uses: actions/setup-node@v4
+         with:
+          node-version: 22.7.2
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js app
+        run: npm run build
