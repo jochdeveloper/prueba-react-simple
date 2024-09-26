@@ -3,11 +3,14 @@ on:
   push:
     branches:
     - 'testing'
-steps:
-- uses: actions/checkout@v4
-- uses: actions/setup-node@v4
-  with:
-    node-version: 22.7.2
-    cache: 'npm'
-- run: npm ci
-- run: npm test
+    jobs:
+  my_first_job:
+    name: My first job
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22.7.2
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test
