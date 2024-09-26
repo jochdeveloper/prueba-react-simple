@@ -1,3 +1,8 @@
+name: default
+on:
+  push:
+    branches:
+    - 'testing'
 steps:
 - uses: actions/checkout@v4
 - uses: actions/setup-node@v4
