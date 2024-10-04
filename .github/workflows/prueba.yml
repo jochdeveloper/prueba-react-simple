@@ -3,22 +3,29 @@ name: Deployment Workflow
 # Trigger this workflow on pushes to the specified branch
 on:
   push:
-    branches:
-      - testing
+    # branches:
+    #- testing
+  pull_request:
+    branches: [ "testing" ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node
-        uses: actions/setup-node@v4
+    steps:       
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v4
+          with:
+            node-version: '22.7.2'
 
-      - name: Install dependencies
-        run: npm install
+        - name: Install dependencies
+          run: npm install
 
-      - name: Build Next.js app
-        run: npm run build
+        - name: ESLint
+          run: npm run fix .
+          
+        - name: Prettier
+          run: npm prettier --write .
+          
+        - name: Build Next.js app
+          run: npm run build
